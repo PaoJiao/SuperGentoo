@@ -71,6 +71,11 @@ src_install() {
 	insinto "${dir}"
 	doins -r *
 	fperms 755 "${dir}"/bin/{idea.sh,fsnotifier{,64}}
+	if use custom-jdk; then
+		if [[ -d jre64 ]]; then
+			fperms -R 755 "${dir}"/jre64/bin
+		fi
+	fi
 
 	make_wrapper "${PN}" "${dir}/bin/${MY_PN}.sh"
 	newicon "bin/${MY_PN}.png" "${PN}.png"
